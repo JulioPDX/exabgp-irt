@@ -22,8 +22,10 @@ jobs:
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag juliopdx/exabgp-irt:$(date +%s)
+      - name: Build the Docker image and push
+        run: |
+          docker build . --file Dockerfile --tag juliopdx/exabgp-irt:$(date +%s)
+          docker push juliopdx/exabgp-irt:$(date +%s)
 
       - name: sync desc and readme
         uses: meeDamian/sync-readme@v1.0.6
