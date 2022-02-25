@@ -13,19 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: check out code
+        uses: actions/checkout@v2
 
-      - name: docker login
-        env:
-          DOCKER_USER: ${{secrets.DOCKER_USER }}
-          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD }}
-        run: |
-          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-
-      - name: Build the Docker image and push
-        run: |
-          docker build . --file Dockerfile --tag juliopdx/exabgp-irt:$(date +%s)
-          docker push juliopdx/exabgp-irt:$(date +%s)
+      - name: build and push docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: juliopdx/exabgp-irt
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tags: latest, $(date +%s)
 
       - name: sync desc and readme
         uses: meeDamian/sync-readme@v1.0.6
