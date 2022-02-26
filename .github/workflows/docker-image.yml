@@ -23,7 +23,7 @@ jobs:
           registry: docker.io
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          tags: latest, $(date +%s)
+          tags: latest, $(date +%F)
 
       - name: sync desc and readme
         uses: meeDamian/sync-readme@v1.0.6
