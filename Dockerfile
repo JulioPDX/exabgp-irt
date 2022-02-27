@@ -1,11 +1,11 @@
 FROM ubuntu:20.04
 
 # Install dependencies
-COPY ebgp.cfg .
+COPY bgp.cfg .
 RUN apt update
 RUN apt install python3-pip net-tools wget mrtparse vim nano -y && \
     rm -rf /var/lib/apt/lists/* && apt clean
-RUN pip install exabgp
+RUN pip install exabgp==4.2.17
 
 # Download latest table and remove when complete
 RUN wget https://data.ris.ripe.net/rrc16/latest-bview.gz
