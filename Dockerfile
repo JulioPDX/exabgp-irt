@@ -9,8 +9,5 @@ RUN pip install exabgp==4.2.17
 
 # Download latest table and remove when complete
 RUN wget https://data.ris.ripe.net/rrc16/latest-bview.gz
-RUN mrt2exabgp -G -P latest-bview.gz > fullbgptable.py
+RUN mrt2exabgp -G -P -4 172.16.2.1 latest-bview.gz > fullbgptable.py
 RUN rm -rf latest-bview.gz
-
-# Set next hop self
-RUN  sed -i -E "s/(next-hop ).+( nlri)/\1self\2/g" fullbgptable.py
